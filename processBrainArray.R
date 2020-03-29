@@ -7,9 +7,9 @@ library(openxlsx)
 library(CoreGx)
 library(affy)
 library(Biobase)
-library(BiocManager)
-
-BiocManager::install("hgu133plus2hsensgcdf")
+library(devtools)
+install_url("http://brainarray.mbni.med.umich.edu/bioc/src/contrib/hgu133plus2hsensgcdf_23.0.0.tar.gz")
+library(hgu133plus2hsensgcdf)
 
 #read in sample info
 message("Read sample information")
