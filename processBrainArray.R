@@ -8,7 +8,7 @@ library(CoreGx)
 library(affy)
 library(Biobase)
 library(devtools)
-install_url("http://brainarray.mbni.med.umich.edu/bioc/src/contrib/hgu133plus2hsensgcdf_23.0.0.tar.gz")
+install_url("http://mbni.org/customcdf/16.0.0/ensg.download/hgu133plus2hsensgcdf_16.0.0.tar.gz")
 library(hgu133plus2hsensgcdf)
 
 #read in sample info
