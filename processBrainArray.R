@@ -25,6 +25,20 @@ rownames(sampleinfo) <- as.character(sampleinfo[ , "cellid"])
     return(as.character(h$cdfName))
   }
 
+`celfileDateHour` <-
+function (filename) {
+	h <- affyio::read.celfile.header(filename, info="full")
+	#ddate <- grep("/", strsplit(h$DatHeader, " ")[[1]], value=TRUE)
+	#ddate <- strsplit(ddate, split="/")[[1]]
+	#CC <- ifelse(substr(ddate[3],1,1)=="9", "19", "20")
+	if(length(h$ScanDate) > 0) {
+	    h$ScanDate <- gsub(pattern="T", replacement=" ", x=h$ScanDate)
+	    ddate <- strsplit(h$ScanDate, " ")[[1]]
+    } else { ddate <- rep(NA, 2)}
+    names(ddate) <- c("day", "hour")
+	return(ddate)
+}
+
 message("Keeping all replicates")
 celfn <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=TRUE)
 celfns <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=FALSE)
