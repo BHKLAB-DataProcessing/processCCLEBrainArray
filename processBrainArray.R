@@ -46,6 +46,8 @@ load("/pfs/downloadCCLE_CELArray/celfile.timestamp.RData")
 message("Keeping all replicates")
 celfn <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=TRUE)
 celfns <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=FALSE)
+print(head(celfn))
+print(head(celfns))
 ## experiments' names
 names(celfn) <- names(celfns) <- gsub(".CEL.gz", "", celfns)
 ## chip type and date
@@ -54,7 +56,6 @@ chipd <- t(sapply(celfn, celfileDateHour))
 
 ## keep only the CEL files present in sampleinfo
 fn <- sampleinfo[ , "Expression.arrays"]
-# if(any(!is.element(fn[!is.na(fn)], names(celfns)))) { stop("some CEL files are missing for the CCLE project") }
 myx <- intersect(fn[!is.na(fn)], names(celfns))
 celfn <- celfn[myx]
 celfns <- celfns[myx]
