@@ -39,6 +39,7 @@ function (filename) {
 	return(ddate)
 }
 
+load("/pfs/downloadCCLE_CELArray/celfile.timestamp.RData")
 message("Keeping all replicates")
 celfn <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=TRUE)
 celfns <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=FALSE)
