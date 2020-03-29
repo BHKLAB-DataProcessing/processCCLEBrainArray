@@ -19,6 +19,12 @@ sampleinfo <- data.frame("cellid"=as.character(sampleinfo[ , "Cell.line.primary.
 #     sampleinfo[ , "cellid"] <- as.character(sampleinfo[ , "cellid"])
 rownames(sampleinfo) <- as.character(sampleinfo[ , "cellid"])
 
+`celfileChip` <-
+  function (filename) {
+    h <- affyio::read.celfile.header(filename, info="full")
+    return(as.character(h$cdfName))
+  }
+
 message("Keeping all replicates")
 celfn <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=TRUE)
 celfns <- list.celfiles(file.path("/pfs/downloadCCLE_CELArray"), full.names=FALSE)
