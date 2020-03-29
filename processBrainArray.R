@@ -7,6 +7,9 @@ library(openxlsx)
 library(CoreGx)
 library(affy)
 library(Biobase)
+library(BiocManager)
+
+BiocManager::install("hgu133plus2hsensgcdf")
 
 #read in sample info
 message("Read sample information")
