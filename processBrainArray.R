@@ -78,7 +78,7 @@ controls <- rownames(exprs(eset))[grep("AFFX", rownames(exprs(eset)))]
 fData(eset) <- fData(eset)[which(!rownames(fData(eset)) %in% controls), , drop=FALSE]
 exprs_sub <- exprs(eset)[which(!rownames(exprs(eset)) %in% controls), , drop=FALSE]
 new_eset <- ExpressionSet(assayData = exprs_sub, phenoData = eset@phenoData, featureData = eset@featureData)
-eset <- new_set
+eset <- new_eset
 ensemblIds <- sapply(strsplit(rownames(exprs(eset)), "_"), function (x) { return (x[[1]]) }) 
 fData(eset) <- data.frame("Probe"=rownames(exprs(eset)), 
                                     "EnsemblGeneId"=ensemblIds,
