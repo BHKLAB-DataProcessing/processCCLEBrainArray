@@ -76,7 +76,9 @@ pData(eset) <- as.data.frame(sampleinfo[match(toupper(gsub("[.]CEL[.]gz$", "", r
 colnames(exprs(eset)) <- rownames(pData(eset)) <- toupper(gsub("[.]CEL[.]gz$", "", colnames(exprs(eset))))
 controls <- rownames(exprs(eset))[grep("AFFX", rownames(exprs(eset)))]
 fData(eset) <- fData(eset)[which(!rownames(fData(eset)) %in% controls), , drop=FALSE]
-exprs(eset) <- exprs(eset)[which(!rownames(exprs(eset)) %in% controls), , drop=FALSE]
+exprs_sub <- exprs(eset)[which(!rownames(exprs(eset)) %in% controls), , drop=FALSE]
+new_eset <- ExpressionSet(assayData = exprs_sub, phenoData = eset@phenoData, featureData = eset@featureData)
+eset <- new_set
 ensemblIds <- sapply(strsplit(rownames(exprs(eset)), "_"), function (x) { return (x[[1]]) }) 
 fData(eset) <- data.frame("Probe"=rownames(exprs(eset)), 
                                     "EnsemblGeneId"=ensemblIds,
@@ -87,15 +89,8 @@ fData(eset) <- data.frame("Probe"=rownames(exprs(eset)),
 rownames(fData(eset)) <- rownames(exprs(eset))
 pData(eset)[ , "batchid"] <- NA
 annotation(eset) <- "rna"
+experimentData(eset)@preprocessing <- list(Normalisation=list(name="rma", package="affy", version=as.character(packageVersion("affy")))) 
 save(eset, file="/pfs/out/ccle_ge_brainarray_rma.RData")
 
 
-#build annotation matrix
-#genexprs <- t(exprs(eset))
-#annot[ ,4] <- annot[annot[ ,3],4]
-#annot[ ,6] <- annot[annot[ ,5],6]  
-#annot <- annot[ ,-3]
-#annot <- annot[ ,-4]
 
-#annot <- annot[colnames(genexprs),]
-#rownames(annot) <- colnames(genexprs)
