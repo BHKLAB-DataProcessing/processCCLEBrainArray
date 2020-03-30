@@ -90,6 +90,7 @@ rownames(fData(eset)) <- rownames(exprs(eset))
 pData(eset)[ , "batchid"] <- NA
 annotation(eset) <- "rna"
 experimentData(eset)@preprocessing <- list(Normalisation=list(name="rma", package="affy", version=as.character(packageVersion("affy")))) 
+#save microarray eset
 save(eset, file="/pfs/out/ccle_ge_brainarray_rma.RData")
 
 
