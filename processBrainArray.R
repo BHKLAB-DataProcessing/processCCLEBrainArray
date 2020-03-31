@@ -66,9 +66,9 @@ sampleinfo <- sampleinfo[match(myx, sampleinfo[ , "Expression.arrays"]), ,drop=F
 sampleinfo <- data.frame("samplename"=names(celfns), "filename"=celfns, "chiptype"=chipt, "hybridization.date"=chipd[ , "day"], "hybridization.hour"=chipd[ , "hour"], "file.day"=celfile.timestamp[ , "file.day"], "file.hour"=celfile.timestamp[ , "file.hour"], "batch"=NA, sampleinfo, check.names=FALSE)
 rownames(sampleinfo) <- toupper(names(celfns))
 
-##annotate genes using Ensembl
-#load("/pfs/downAnnotations/Ensembl.v99.annotation.RData")
-annot <- read.csv("/pfs/downAnnotations/annot_ensembl_all_genes.csv", stringsAsFactors=FALSE, check.names=FALSE, header=TRUE, row.names=1)
+##annotate genes/probes using Ensembl v99 (Jan 2020)
+load("/pfs/downAnnotations/Ensembl.v99.annotation.RData")
+#annot <- read.csv("/pfs/downAnnotations/annot_ensembl_all_genes.csv", stringsAsFactors=FALSE, check.names=FALSE, header=TRUE, row.names=1)
 
 #create brainarray eset
 eset <- just.rma(filenames=celfn, verbose=TRUE, cdfname="hgu133plus2hsensgcdf")
@@ -82,10 +82,9 @@ eset <- new_eset
 ensemblIds <- sapply(strsplit(rownames(exprs(eset)), "_"), function (x) { return (x[[1]]) }) 
 fData(eset) <- data.frame("Probe"=rownames(exprs(eset)), 
                                     "EnsemblGeneId"=ensemblIds,
-                                    "EntrezGeneId"=annot[ensemblIds, "EntrezGene.ID"],
-                                    "Symbol"=annot[ensemblIds, "gene_name"],
-                                    "GeneBioType"=annot[ensemblIds, "gene_biotype"],
-                                    "BEST"=TRUE)
+                                    "Symbol"=features_gene[ensemblIds, "gene_name"],
+                                    "GeneBioType"=features_gene[ensemblIds, "gene_biotype"])
+
 rownames(fData(eset)) <- rownames(exprs(eset))
 pData(eset)[ , "batchid"] <- NA
 annotation(eset) <- "rna"
