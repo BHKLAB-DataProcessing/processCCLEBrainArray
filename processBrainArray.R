@@ -10,7 +10,7 @@ library(Biobase)
 library(devtools)
 install_url("http://mbni.org/customcdf/20.0.0/ensg.download/hgu133plus2hsensgcdf_20.0.0.tar.gz")
 library(hgu133plus2hsensgcdf)
-
+options(stringsAsFactors = FALSE)
 #read in sample info
 message("Read sample information")
 sampleinfo <- read.csv("/pfs/downAnnotations/CCLE_sample_info_file_2012-10-18.txt", sep="\t")
