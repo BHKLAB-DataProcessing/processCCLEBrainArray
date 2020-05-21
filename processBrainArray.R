@@ -85,8 +85,9 @@ fData(eset) <- data.frame("Probe"=rownames(exprs(eset)),
                                     "Symbol"=features_gene[ensemblIds, "gene_name"],
                                     "GeneBioType"=features_gene[ensemblIds, "gene_biotype"])
 
-rownames(fData(eset)) <- eset@featureData@data$EnsemblGeneId
-rownames(eset) <- eset@featureData@data$EnsemblGeneId
+#rownames(fData(eset)) <- eset@featureData@data$EnsemblGeneId
+#rownames(eset) <- eset@featureData@data$EnsemblGeneId
+rownames(fData(eset)) <- rownames(exprs(eset))
 pData(eset)[ , "batchid"] <- NA
 annotation(eset) <- "rna"
 experimentData(eset)@preprocessing <- list(Normalisation=list(name="rma", package="affy", version=as.character(packageVersion("affy")))) 
